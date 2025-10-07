@@ -3890,3 +3890,414 @@ My Custom Scripts/
 By following these tips and best practices, you'll transform ScriptBox from a useful tool into an indispensable part of your creative workflow. Experiment with different approaches, find what works best for your specific needs, and don't hesitate to customize your setup as your skills and projects evolve.
 
 ---
+
+
+
+## 10. Troubleshooting
+
+Even with careful installation and setup, you may occasionally encounter issues with ScriptBox. This section addresses common problems and provides solutions to get you back on track quickly.
+
+### Extension Doesn't Appear in Illustrator
+
+If ScriptBox doesn't show up in the Window > Extensions menu after installation, try these solutions:
+
+**Solution 1: Verify Installation Location**
+
+1. **Check the CEP Extensions Folder**
+   - Ensure you copied ScriptBox to the correct location:
+     - **Windows:** `C:\Program Files (x86)\Common Files\Adobe\CEP\extensions\`
+     - **macOS:** `/Library/Application Support/Adobe/CEP/extensions/`
+   - The folder structure should be: `extensions/ScriptBox/[all files]`
+   - Make sure you copied the entire ScriptBox folder, not just its contents
+
+2. **Verify Folder Name**
+   - The extension folder should be named exactly "ScriptBox" (case-sensitive on macOS)
+   - Avoid spaces or special characters in the folder name
+   - Don't add version numbers to the folder name
+
+**Solution 2: Enable Unsigned Extensions**
+
+If you're using an unsigned version of ScriptBox, you must enable debug mode:
+
+**Windows:**
+1. Open Registry Editor (Win+R, type `regedit`, press Enter)
+2. Navigate to: `HKEY_CURRENT_USER\Software\Adobe\CSXS.9`
+3. Create a new String value named `PlayerDebugMode` with value `1`
+4. Repeat for CSXS.10, CSXS.11, and any other versions you have installed
+5. Close Registry Editor and restart Illustrator
+
+**macOS:**
+1. Open Terminal (Applications > Utilities > Terminal)
+2. Run these commands (press Enter after each):
+   ```
+   defaults write com.adobe.CSXS.9 PlayerDebugMode 1
+   defaults write com.adobe.CSXS.10 PlayerDebugMode 1
+   defaults write com.adobe.CSXS.11 PlayerDebugMode 1
+   ```
+3. Restart Illustrator
+
+**Solution 3: Check Illustrator Version Compatibility**
+
+1. **Verify Your Illustrator Version**
+   - ScriptBox requires Adobe Illustrator 18.0 (CC 2014) or later
+   - Check your version: Help > About Illustrator
+   - Update Illustrator if you're running an older version
+
+2. **Match CSXS Version**
+   - Different Illustrator versions use different CSXS versions:
+     - CC 2014-2015: CSXS.5 or CSXS.6
+     - CC 2015.3-2017: CSXS.7
+     - CC 2018-2019: CSXS.8 or CSXS.9
+     - CC 2020-2021: CSXS.9 or CSXS.10
+     - CC 2022+: CSXS.10 or CSXS.11
+   - Enable PlayerDebugMode for your specific CSXS version
+
+**Solution 4: Check File Permissions**
+
+1. **Windows:**
+   - Right-click the ScriptBox folder
+   - Select Properties > Security
+   - Ensure your user account has Read & Execute permissions
+   - Click Edit to modify permissions if needed
+
+2. **macOS:**
+   - Open Terminal
+   - Run: `sudo chmod -R 755 "/Library/Application Support/Adobe/CEP/extensions/ScriptBox"`
+   - Enter your admin password when prompted
+   - Restart Illustrator
+
+**Solution 5: Restart and Refresh**
+
+1. **Complete Restart:**
+   - Quit Illustrator completely (not just close documents)
+   - On macOS, ensure Illustrator isn't running in the background
+   - Wait 10 seconds
+   - Launch Illustrator again
+   - Check Window > Extensions > ScriptBox
+
+2. **Clear CEP Cache (Advanced):**
+   - Quit Illustrator
+   - Delete CEP cache files:
+     - **Windows:** `C:\Users\[YourUsername]\AppData\Local\Temp\cep_cache`
+     - **macOS:** `~/Library/Logs/CSXS/`
+   - Restart Illustrator
+
+**Solution 6: Verify Manifest File**
+
+1. **Check manifest.xml:**
+   - Navigate to the ScriptBox folder
+   - Open the `CSXS` subfolder
+   - Verify `manifest.xml` exists and isn't corrupted
+   - If missing or damaged, reinstall ScriptBox
+
+2. **Validate XML Syntax:**
+   - Open manifest.xml in a text editor
+   - Check for XML syntax errors
+   - Ensure all tags are properly closed
+   - Compare with a backup if available
+
+### Scripts Not Running Properly
+
+If scripts fail to execute or produce unexpected results, try these troubleshooting steps:
+
+**Problem: Script Shows Error Message**
+
+**Solution 1: Check Selection Requirements**
+- Many scripts require objects to be selected before running
+- Read the script description (hover tooltip) to understand requirements
+- Select appropriate objects and try again
+- Some scripts work on specific object types (paths, text, images)
+
+**Solution 2: Verify Document State**
+- Ensure you have an active document open
+- Some scripts require artboards to be present
+- Check that layers aren't locked or hidden
+- Verify objects aren't grouped in unexpected ways
+
+**Solution 3: Check Illustrator Permissions**
+- Some scripts need permission to access files or system resources
+- Grant permissions when prompted by Illustrator
+- On macOS, check System Preferences > Security & Privacy
+- Ensure Illustrator has necessary permissions
+
+**Problem: Script Runs But Produces Wrong Results**
+
+**Solution 1: Review Script Settings**
+- Many scripts open dialog boxes with options
+- Read all options carefully before clicking OK
+- Adjust settings to match your intended outcome
+- Try running the script again with different settings
+
+**Solution 2: Check Object Properties**
+- Verify selected objects have the properties the script expects
+- Some scripts only work on paths, not compound paths or groups
+- Check fill and stroke settings
+- Ensure objects aren't clipping masks or symbols
+
+**Solution 3: Test with Simple Objects**
+- Create a simple test object (rectangle, circle)
+- Run the script on the test object
+- If it works, the issue may be with your original objects
+- Simplify complex objects before running scripts
+
+**Problem: Script Freezes or Takes Too Long**
+
+**Solution 1: Reduce Complexity**
+- Scripts may slow down with many objects or complex paths
+- Try running on fewer objects at a time
+- Simplify paths before running scripts (Object > Path > Simplify)
+- Break large operations into smaller batches
+
+**Solution 2: Close Other Applications**
+- Free up system memory by closing unnecessary programs
+- Quit other Adobe applications
+- Close browser tabs and background applications
+- Restart your computer if memory is critically low
+
+**Solution 3: Update Illustrator**
+- Ensure you're running the latest version of Illustrator
+- Check for updates: Help > Updates
+- Install available updates and restart
+- Some scripts may require newer Illustrator features
+
+**Problem: Script Worked Before But Now Fails**
+
+**Solution 1: Check Recent Changes**
+- Did you update Illustrator recently?
+- Did you modify the script file?
+- Did you move or rename script files?
+- Restore from backup if you made changes
+
+**Solution 2: Reinstall ScriptBox**
+- Back up your favorites and custom scripts
+- Remove the ScriptBox folder
+- Download a fresh copy
+- Reinstall following the installation guide
+- Restore your favorites and custom scripts
+
+**Solution 3: Reset Illustrator Preferences**
+- Quit Illustrator
+- Hold Alt+Ctrl+Shift (Windows) or Opt+Cmd+Shift (macOS) while launching
+- Click Yes to delete preferences
+- Reconfigure your Illustrator settings
+- Test the script again
+
+### External Scripts Not Loading
+
+If custom scripts in the External Scripts tab aren't appearing or working:
+
+**Problem: External Scripts Don't Appear**
+
+**Solution 1: Verify Folder Path**
+- Check that the folder path is correct and accessible
+- Ensure the folder hasn't been moved or renamed
+- Verify you have read permissions for the folder
+- Try removing and re-adding the folder path
+
+**Solution 2: Check File Extensions**
+- External scripts must have the `.jsx` extension
+- Verify files aren't named `.jsx.txt` or similar
+- Show file extensions in your operating system:
+  - **Windows:** File Explorer > View > File name extensions
+  - **macOS:** Finder > Preferences > Advanced > Show all filename extensions
+- Rename files to have proper `.jsx` extension
+
+**Solution 3: Refresh the Script List**
+- Click the refresh button in the External Scripts tab
+- Wait a few seconds for scripts to reload
+- Check if scripts appear after refresh
+- Restart Illustrator if refresh doesn't work
+
+**Solution 4: Check Folder Structure**
+- Ensure scripts are directly in the added folder, not in subfolders
+- ScriptBox may not recursively search nested folders
+- Flatten your folder structure if needed
+- Keep scripts organized but not deeply nested
+
+**Problem: External Scripts Won't Run**
+
+**Solution 1: Validate Script Syntax**
+- Open the script in a text editor
+- Check for syntax errors or corruption
+- Verify the script is valid JSX code
+- Test the script outside ScriptBox (File > Scripts > Other Script)
+
+**Solution 2: Check Script Compatibility**
+- Ensure the script is compatible with your Illustrator version
+- Some scripts require specific Illustrator features
+- Check script documentation for version requirements
+- Contact the script author for compatibility information
+
+**Solution 3: Review Script Permissions**
+- Ensure script files have read and execute permissions
+- On macOS, run: `chmod +x /path/to/script.jsx`
+- On Windows, check file properties > Security
+- Move scripts to a location with proper permissions
+
+**Problem: External Scripts Slow Down ScriptBox**
+
+**Solution 1: Reduce Script Count**
+- Remove unused scripts from external folders
+- Keep only actively used scripts
+- Archive old scripts outside of ScriptBox
+- Aim for under 50 external scripts total
+
+**Solution 2: Optimize Folder Organization**
+- Remove duplicate scripts
+- Delete test or experimental scripts
+- Organize scripts into focused collections
+- Use multiple smaller folders instead of one large folder
+
+**Solution 3: Remove Problematic Scripts**
+- Identify scripts that cause slowdowns
+- Remove them temporarily to test performance
+- Check if scripts have infinite loops or heavy operations
+- Contact script authors about performance issues
+
+### Performance Optimization Tips
+
+Keep ScriptBox running smoothly with these performance best practices:
+
+**Optimize Your Setup:**
+
+1. **Manage Favorites Wisely**
+   - Keep your favorites list under 30 items
+   - Remove scripts you rarely use
+   - Organize favorites by frequency of use
+   - Regularly review and clean up favorites
+
+2. **Limit External Scripts**
+   - Add only essential external script folders
+   - Remove folders you're not actively using
+   - Keep external script count reasonable (under 50)
+   - Archive old project scripts
+
+3. **Use Appropriate View Modes**
+   - List view is fastest for large script collections
+   - Grid view requires more rendering resources
+   - Switch to compact view if experiencing slowdowns
+   - Avoid frequent view mode switching
+
+4. **Keep ScriptBox Updated**
+   - Check for updates regularly
+   - Install new versions when available
+   - Read release notes for performance improvements
+   - Report performance issues to the developer
+
+5. **Optimize Illustrator Performance**
+   - Close unnecessary documents
+   - Reduce document complexity when possible
+   - Increase Illustrator's memory allocation (Preferences > Performance)
+   - Keep Illustrator updated to the latest version
+
+**System-Level Optimization:**
+
+1. **Free Up System Resources**
+   - Close unnecessary applications
+   - Quit background processes you don't need
+   - Restart your computer regularly
+   - Ensure adequate free disk space (at least 10GB)
+
+2. **Hardware Considerations**
+   - ScriptBox runs best with 8GB+ RAM
+   - SSD drives improve loading times
+   - Multiple monitors allow keeping ScriptBox always visible
+   - Adequate CPU power helps with script execution
+
+3. **Operating System Maintenance**
+   - Keep your OS updated
+   - Run disk cleanup utilities
+   - Check for malware or viruses
+   - Optimize startup programs
+
+### Getting Additional Help
+
+If you've tried the troubleshooting steps above and still experience issues, here are additional resources:
+
+**Contact Support:**
+
+- **Website:** Visit [Samolevsky.com](https://samolevsky.com) for documentation and support
+- **Email:** Contact the developer through the website contact form
+- **Community:** Check for user forums or community groups
+- **Social Media:** Follow ScriptBox on social media for updates and tips
+
+**Before Contacting Support:**
+
+When reaching out for help, please provide:
+
+1. **System Information:**
+   - Operating system (Windows/macOS) and version
+   - Adobe Illustrator version
+   - ScriptBox version
+
+2. **Problem Description:**
+   - What you were trying to do
+   - What happened instead
+   - Any error messages (take screenshots)
+   - Steps to reproduce the issue
+
+3. **Troubleshooting Attempted:**
+   - List the solutions you've already tried
+   - Note any changes in behavior
+   - Mention if the problem is consistent or intermittent
+
+4. **Additional Context:**
+   - When did the problem start?
+   - Does it happen with all scripts or specific ones?
+   - Have you made any recent system changes?
+
+**Useful Information to Include:**
+
+- Screenshots of error messages
+- Screenshots of the ScriptBox interface showing the issue
+- Sample files that demonstrate the problem (if applicable)
+- Console logs or error logs (if available)
+
+> **Tip:** The more detailed information you provide, the faster support can help resolve your issue. Screenshots are especially helpful for visual problems.
+
+---
+
+## Conclusion
+
+Congratulations! You've completed the ScriptBox User Guide. You now have a comprehensive understanding of all ScriptBox features, from basic script execution to advanced workflow optimization.
+
+**Key Takeaways:**
+
+- **Toolbox Tab:** Your gateway to 200+ automation scripts organized into 11 categories
+- **External Scripts:** Extend ScriptBox with your own custom scripts
+- **Code Editor:** Write, test, and run JSX scripts without leaving Illustrator
+- **Panels Manager:** One-click access to all Illustrator panels
+- **Favorites System:** Create a personalized toolkit of your most-used scripts and panels
+- **Additional Features:** Tasks, Videos, and Reference tabs keep you organized and inspired
+- **Tips & Best Practices:** Optimize your workflow with proven strategies
+- **Troubleshooting:** Solutions for common issues and performance optimization
+
+**Next Steps:**
+
+1. **Explore:** Spend time browsing different script categories to discover new tools
+2. **Experiment:** Try scripts on test documents to learn what they do
+3. **Organize:** Build your Favorites collection with scripts you use most
+4. **Customize:** Add external scripts and personalize your setup
+5. **Master:** Practice using ScriptBox daily until it becomes second nature
+6. **Share:** Help others learn ScriptBox and share your favorite workflows
+
+**Stay Updated:**
+
+- Check the Info tab regularly for updates
+- Visit [Samolevsky.com](https://samolevsky.com) for news and resources
+- Follow ScriptBox on social media for tips and tutorials
+- Join the community to share experiences and learn from others
+
+**Thank You:**
+
+Thank you for choosing ScriptBox! We hope this extension transforms your Adobe Illustrator workflow and helps you create amazing designs more efficiently. If you find ScriptBox valuable, please consider supporting the developer and sharing it with fellow designers.
+
+Happy designing!
+
+---
+
+**Document Version:** 1.0  
+**Last Updated:** October 2025  
+**Author:** Samolevsky.com  
+**ScriptBox Version:** 0.2.3.9
+
